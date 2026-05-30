@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="hypermark",  # Name of your package
+    name="hypermark-py",  # Name of your package on PyPI
     version="1.0.0",  # Version of your package
     author="SwapCodesDev",  # Replace with your name
     author_email="swapcodes.dev@gmail.com",  # Replace with your email

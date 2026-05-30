@@ -60,9 +60,22 @@ pip install beautifulsoup4 emoji
 
 ## Installation & Python API Usage
 
-You can install the package directly via pip from source:
+You can install the package using pip in several ways:
+
+### 1. From PyPI (Recommended after Publishing)
 ```bash
-pip install .
+pip install hypermark-py
+```
+
+### 2. Directly from GitHub (Specifying the Python Subdirectory)
+```bash
+pip install git+https://github.com/SwapCodesDev/Markdown-to-HTML.git#subdirectory=python
+```
+
+### 3. From Local Source Path
+If you have cloned the repository locally, run the following command from the root of the project:
+```bash
+pip install ./python
 ```
 
 ### Python API
