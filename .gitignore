@@ -1,1 +1,8 @@
-test
+.vscode/
+__pycache__/
+*.pyc
+scratch/
+*.log
+build/
+dist/
+*.egg-info/

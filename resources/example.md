@@ -77,7 +77,7 @@ These elements extend the basic syntax by adding additional features. Not all Ma
 
 ### Fenced Code Block
 
-```
+``` python
 {
   "firstName": "John",
   "lastName": "Smith",
@@ -130,3 +130,23 @@ H~2~O
 ### Superscript
 
 X^2^
+
+## Modern Extensions
+
+### Fenced Alert Containers
+
+::: note Informational Note
+This is a standard note banner used to highlight helpful information.
+:::
+
+::: warning CRITICAL WARNING!
+This is a warning block to highlight important cautions.
+:::
+
+::: tip Best Practice
+This is a tip callout box to highlight suggestions.
+:::
+
+### Interactive Spoilers
+
+Do you want to know the secret? ||Hypermark is ultra fast and style-injected!||
