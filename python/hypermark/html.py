@@ -12,10 +12,10 @@ class HTML:
     anchors, nested lists, and responsive table builders.
     """
 
-    def __init__(self, path_md: str, path_html: str, style: str = "default") -> None:
+    def __init__(self, path_md: str, path_html: str, style: str = "default", styles: Optional[str] = None) -> None:
         self.path_md: str = path_md
         self.path_html: str = path_html
-        self.style: str = style
+        self.style: str = styles if styles is not None else style
 
         # State machine variables
         self.is_code_block: bool = False
@@ -314,18 +314,26 @@ class HTML:
 
         style_normalized = self.style.lower().strip() if isinstance(self.style, str) else ""
         if style_normalized in ("default", "defualt"):
-            # Resolved relative path correctly because __file__ is inside python/hypermark/html.py
-            default_css_path = os.path.abspath(
+            # Try package-bundled stylesheet first
+            package_css_path = os.path.abspath(
+                os.path.join(os.path.dirname(__file__), "hypermark.css")
+            )
+            # Try development repository root path as a secondary option
+            repo_css_path = os.path.abspath(
                 os.path.join(os.path.dirname(__file__), "..", "..", "resources", "hypermark.css")
             )
-            try:
-                if os.path.exists(default_css_path):
-                    with open(default_css_path, "r", encoding="utf-8") as f:
-                        css_content = f.read()
-                else:
-                    css_link = "<link rel='stylesheet' href='resources/hypermark.css'>\n"
-            except Exception:
-                css_link = "<link rel='stylesheet' href='resources/hypermark.css'>\n"
+            
+            for path in (package_css_path, repo_css_path):
+                if os.path.exists(path):
+                    try:
+                        with open(path, "r", encoding="utf-8") as f:
+                            css_content = f.read()
+                            break
+                    except Exception:
+                        pass
+            
+            if not css_content:
+                css_link = "<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/SwapCodesDev/hypermark@master/resources/hypermark.css'>\n"
         elif self.style and os.path.exists(self.style):
             try:
                 with open(self.style, "r", encoding="utf-8") as f:
@@ -586,7 +594,7 @@ class HTML:
         self.write(final_html)
 
 
-def html(path_md: str, path_html: str, style: str = "default") -> None:
+def html(path_md: str, path_html: str, style: str = "default", styles: Optional[str] = None) -> None:
     """Convenience functional wrapper to parse Markdown into stylized HTML."""
-    parser = HTML(path_md, path_html, style)
+    parser = HTML(path_md, path_html, style=style, styles=styles)
     parser.convert()

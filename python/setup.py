@@ -22,6 +22,6 @@ setup(
     ],
     python_requires=">=3.6",
     install_requires=['beautifulsoup4', 'emoji'],  # Add dependencies here if needed
-    package_data={'hypermark': ['README.md', 'LICENSE']},
+    package_data={'hypermark': ['README.md', 'LICENSE', 'hypermark.css']},
     license="MIT",
 )
