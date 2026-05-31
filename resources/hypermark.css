@@ -177,7 +177,7 @@ code {
   color: #34d399; /* Smooth emerald green for confirmation */
 }
 
-/* Pre Code blocks */
+/* Pre Code blocks & Custom Scrollbar */
 pre {
   margin: 0;
 }
@@ -193,6 +193,26 @@ pre code {
   border: none;
 }
 
+/* Custom Sleek Scrollbar for Code Blocks */
+pre::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+pre::-webkit-scrollbar-track {
+  background: #090d16;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+  transition: var(--transition);
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
 /* Tables */
 table {
   width: 100%;
@@ -201,15 +221,21 @@ table {
   margin: 2em 0;
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-hover); /* High contrast default border to prevent blending on white */
   box-shadow: var(--shadow-md);
   background-color: var(--bg-card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+table:hover {
+  border-color: #94a3b8; /* Crisp darker border on hover */
+  box-shadow: var(--shadow-lg);
 }
 
 th, td {
   border: none !important;
   border-bottom: 1px solid var(--border) !important;
-  padding: 14px 20px !important;
+  padding: 16px 24px !important;
 }
 
 tr:last-child td {
@@ -217,21 +243,22 @@ tr:last-child td {
 }
 
 th {
-  background-color: #f8fafc;
+  background-color: #f1f5f9; /* Distinct header color for white bg */
   color: var(--text-heading);
-  font-weight: 600;
+  font-weight: 700;
   text-align: left;
   text-transform: uppercase;
   font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+  border-bottom: 2px solid var(--primary) !important; /* Vivid indigo divider for high contrast */
 }
 
 tr:nth-child(even) {
-  background-color: #fafafa;
+  background-color: #f8fafc;
 }
 
 tr:hover {
-  background-color: #f1f5f9;
+  background-color: rgba(79, 70, 229, 0.04); /* Elegant indigo glow on hover */
   transition: background-color 0.15s ease;
 }
 
@@ -242,19 +269,47 @@ ul, ol {
 }
 
 li {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.6em;
+  transition: color 0.15s ease;
 }
 
-/* Task lists */
+/* Task lists (Custom Interactive Checked States) */
 li input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.15em;
+  height: 1.15em;
+  border: 2px solid var(--border-hover);
+  border-radius: 4px;
   margin-right: 10px;
-  width: 16px;
-  height: 16px;
   vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: default;
+  position: relative;
+  background-color: var(--bg-card);
+  transition: var(--transition);
 }
 
-/* Definition List */
+li input[type="checkbox"]:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+li input[type="checkbox"]:checked::after {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 1px;
+}
+
+/* Definition List Card */
 dl {
   border: 1px solid var(--border);
   padding: 28px;
@@ -262,6 +317,12 @@ dl {
   background-color: var(--bg-card);
   box-shadow: var(--shadow-md);
   margin: 2em 0;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+dl:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg);
 }
 
 dt {
@@ -295,18 +356,19 @@ hr {
 
 /* Spoilers */
 .spoiler {
-  background-color: #e2e8f0;
+  background-color: #cbd5e1;
   color: transparent;
-  filter: blur(6px);
-  border-radius: var(--radius-sm);
-  padding: 2px 6px;
+  filter: blur(5px);
+  border-radius: 4px;
+  padding: 3px 8px;
   cursor: pointer;
   user-select: none;
-  transition: var(--transition);
+  transition: filter 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease, color 0.25s ease;
 }
 
 .spoiler:hover {
-  background-color: #cbd5e1;
+  background-color: #94a3b8;
+  filter: blur(4px);
 }
 
 .spoiler.revealed {
@@ -408,70 +470,78 @@ footer, .footnotes {
 
 /* Highly Optimized Print Stylesheet */
 @media print {
+  /* Enforce WebKit & standard print-color-adjust to preserve premium backgrounds, card colors, and shadows */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
   body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    background-color: #ffffff !important; /* Force plain white background for paper/PDF */
+    color: var(--text-main) !important;
     padding: 0 !important;
-    margin: 0 !important;
-    font-size: 12pt !important;
+    margin: 1.5cm !important; /* Standard print margins */
+    font-size: 11pt !important;
   }
   
-  /* Reset gradient headings for printing */
   h1, h2, h3, h4, h5, h6 {
-    color: #000000 !important;
-    background: none !important;
-    -webkit-background-clip: initial !important;
-    background-clip: initial !important;
-    -webkit-text-fill-color: initial !important;
-    page-break-after: avoid;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
   }
   
-  h1 {
-    font-size: 24pt !important;
-    border-bottom: 1px solid #000000 !important;
-  }
-  
-  h2 {
-    font-size: 18pt !important;
-    border-bottom: 1px solid #000000 !important;
-  }
-  
-  /* Reset tables for clean printing */
+  /* Clean, crisp collapsed tables for high-quality paper layout */
   table {
-    width: 100% !important;
     border-collapse: collapse !important;
-    border: 1px solid #000000 !important;
-    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important; /* Soft Slate 300 outer border */
+    box-shadow: none !important; /* Shadows look messy on print */
+    border-radius: 0 !important; /* Flat borders prevent cut-off rendering artifacts in PDF engines */
     background-color: #ffffff !important;
-    page-break-inside: avoid;
   }
   
   th, td {
-    border: 1px solid #000000 !important;
-    padding: 6pt 10pt !important;
+    border: 1px solid #e2e8f0 !important; /* Light Slate 200 cell boundaries */
+    padding: 10px 14px !important; /* Balanced margins */
   }
   
-  /* Reset code blocks for print readability and ink-savings */
-  pre, code {
+  th {
+    border-bottom: 2px solid var(--primary) !important; /* Bold divider line preserved */
     background-color: #f1f5f9 !important;
-    color: #000000 !important;
-    border: 1px solid #cbd5e1 !important;
+  }
+  
+  /* Code Blocks: Light theme for ink-savings and high-contrast paper reading */
+  pre code {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+  
+  /* Code block header styled cleanly in light theme */
+  .code-block-header {
+    background-color: #f1f5f9 !important;
+    color: var(--text-main) !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+  
+  .code-block-lang {
+    color: var(--text-heading) !important;
+  }
+  
+  .code-block-container {
+    border: 1px solid var(--border) !important;
+    background-color: #f8fafc !important;
     box-shadow: none !important;
   }
   
-  .copy-code-button, .code-block-header {
-    display: none !important; /* Hide copy buttons and code headers when printing */
+  /* Hide purely interactive controls on paper */
+  .copy-code-button {
+    display: none !important;
   }
   
+  /* Unblur spoilers for print readability so the secret is legible in PDF */
   .spoiler {
     filter: none !important;
-    color: #000000 !important;
+    color: var(--text-heading) !important;
     background-color: #f1f5f9 !important;
-  }
-  
-  .custom-block {
-    box-shadow: none !important;
-    background-color: #f8fafc !important;
-    border-left-color: #000000 !important;
   }
 }

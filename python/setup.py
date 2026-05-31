@@ -9,7 +9,12 @@ setup(
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/SwapCodesDev/hypermark",
-    py_modules=["hypermark"],
+    packages=find_packages(),
+    entry_points={
+        "console_scripts": [
+            "hypermark=hypermark.cli:main",
+        ],
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",  # Match the LICENSE file
@@ -17,6 +22,6 @@ setup(
     ],
     python_requires=">=3.6",
     install_requires=['beautifulsoup4', 'emoji'],  # Add dependencies here if needed
-    package_data={'hypermark':['README.md', 'LICENSE']},
+    package_data={'hypermark': ['README.md', 'LICENSE']},
     license="MIT",
 )

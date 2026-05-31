@@ -40,7 +40,7 @@ Hypermark is a fast, optimized, and modern Markdown-to-HTML compilation package 
 
 1. Clone the repository and navigate to the project directory:
    ```bash
-   git clone https://github.com/SwapCodesDev/Markdown-to-HTML.git hypermark
+   git clone https://github.com/SwapCodesDev/hypermark.git hypermark
    cd hypermark
    ```
 2. Create and activate the conda environment using the included `environment.yml` definition:
@@ -69,7 +69,7 @@ pip install hypermark-py
 
 ### 2. Directly from GitHub (Specifying the Python Subdirectory)
 ```bash
-pip install git+https://github.com/SwapCodesDev/Markdown-to-HTML.git#subdirectory=python
+pip install git+https://github.com/SwapCodesDev/hypermark.git#subdirectory=python
 ```
 
 ### 3. From Local Source Path
@@ -78,9 +78,9 @@ If you have cloned the repository locally, run the following command from the ro
 pip install ./python
 ```
 
-### Python API
+### Python API Usage
 
-Compile Markdown files programmatically using `hypermark.html` or `hypermark.text`:
+You can import `hypermark` and compile Markdown files programmatically:
 
 ```python
 import hypermark
@@ -94,8 +94,29 @@ hypermark.html("example.md", "example.html", style="path/to/custom.css")
 # 3. Compile HTML and link to a remote CDN or external stylesheet
 hypermark.html("example.md", "example.html", style="https://cdn.example.com/custom.css")
 
-# 4. Compile to Plain Text
+# 4. Compile to Plain Text (TTS-Optimized)
 hypermark.text("example.md", "example.txt")
+```
+
+---
+
+### Command-Line Interface (CLI) Usage
+
+After installing the package via `pip install hypermark-py`, the command-line utility `hypermark` is registered automatically. You can compile Markdown files directly in your terminal:
+
+#### 1. Compile HTML using Default Premium Styling (Inlined CSS)
+```bash
+hypermark input.md output.html --style default
+```
+
+#### 2. Compile HTML using a Custom CSS Stylesheet
+```bash
+hypermark input.md output.html --style path/to/custom.css
+```
+
+#### 3. Compile Plain Text (TTS-Optimized, Symbol-Free)
+```bash
+hypermark input.md output.txt --text
 ```
 
 ---
